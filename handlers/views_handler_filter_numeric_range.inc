@@ -25,32 +25,11 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
     return $operators;
   }
 
-  /**
-   * Provide a list of all the numeric operators
-   */
-  function operator_options($which = 'title') {
-    $options = parent::operator_options();
-
-    foreach ($this->operators() as $id => $info) {
-      $options[$id] = $info[$which];
+  function has_extra_options() {
+    if ($this->operator == 'range') {
+      return TRUE;
     }
-
-    return $options;
   }
-
-  function operator_values($values = 1) {
-    $options = parent::operator_values();
-
-    foreach ($this->operators() as $id => $info) {
-      if ($info['values'] == $values) {
-        $options[] = $id;
-      }
-    }
-
-    return $options;
-  }
-
-  function has_extra_options() { return TRUE; }
 
   function option_definition() {
     $options = parent::option_definition();
@@ -65,31 +44,33 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
   function extra_options_form(&$form, &$form_state) {
     parent::extra_options_form($form, $form_state);
 
-    $form['range_min'] = array(
-      '#type' => 'textfield',
-      '#title' => t('- Minus'),
-      '#default_value' => $this->options['min'],
-      '#description' => t('Value minus this amount starts the search'),
-    );
+    if ($this->operator == 'range') {
+      $form['range_min'] = array(
+        '#type' => 'textfield',
+        '#title' => t('- Minus'),
+        '#default_value' => $this->options['min'],
+        '#description' => t('Value minus this amount starts the search'),
+      );
 
-    $form['range_max'] = array(
-      '#type' => 'textfield',
-      '#title' => t('+ Plus'),
-      '#default_value' => $this->options['max'],
-      '#description' => t('Value plus this amount ends the search'),
-    );
+      $form['range_max'] = array(
+        '#type' => 'textfield',
+        '#title' => t('+ Plus'),
+        '#default_value' => $this->options['max'],
+        '#description' => t('Value plus this amount ends the search'),
+      );
 
-    $form['range_operator'] = array(
-      '#type' => 'select',
-      '#title' => t('Operator'),
-      '#options' => array(
-        'integer' => t('Integer'),
-        'percent' => t('Percent'),
-        'multiple' => t('Multiple'),
-      ),
-      '#default_value' => $this->options['operator'],
-      '#description' => t('The operator to use'),
-    );
+      $form['range_operator'] = array(
+        '#type' => 'select',
+        '#title' => t('Operator'),
+        '#options' => array(
+          'integer' => t('Integer'),
+          'percent' => t('Percent'),
+          'multiple' => t('Multiple'),
+        ),
+        '#default_value' => $this->options['operator'],
+        '#description' => t('The operator to use'),
+      );
+    }
   }
 
   function op_range($field) {
