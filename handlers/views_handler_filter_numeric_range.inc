@@ -101,7 +101,7 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
         $max = (($plus * 0.01) * $value) + $value;
         break;
       case 'multiple' :
-        $min = ($value * $minus) - $value;
+        $min = $value - ($value * $minus);
         $max = ($value * $plus) + $value;
         break;
       default:
