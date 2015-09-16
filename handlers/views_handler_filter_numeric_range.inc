@@ -6,12 +6,15 @@
  */
 
 /**
- * Simple filter to handle numeric range filters
+ * Simple filter to handle numeric range filters.
  *
  * @ingroup views_field_handlers
  */
 class views_handler_filter_numeric_range extends views_handler_filter_numeric {
 
+  /**
+   * {@inheritdoc}
+   */
   function operators() {
     $operators = parent::operators();
 
@@ -25,12 +28,18 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
     return $operators;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   function has_extra_options() {
     if ($this->operator == 'range') {
       return TRUE;
     }
   }
 
+  /**
+   * {@inheritdoc}
+   */
   function option_definition() {
     $options = parent::option_definition();
 
@@ -41,6 +50,9 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
     return $options;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   function extra_options_form(&$form, &$form_state) {
     parent::extra_options_form($form, $form_state);
 
@@ -73,17 +85,17 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   */
   function op_range($field) {
+
     $operator = $this->options['range_operator'];
     $minus = $this->options['range_min'];
     $plus = $this->options['range_max'];
     $value = $this->value['value'];
 
     switch($operator) {
-      case 'integer' :
-        $min = $value - $minus;
-        $max = $value + $plus;
-        break;
       case 'percent' :
         $min = $value - (($minus * 0.01) * $value);
         $max = (($plus * 0.01) * $value) + $value;
@@ -92,13 +104,22 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
         $min = ($value * $minus) - $value;
         $max = ($value * $plus) + $value;
         break;
+      default:
+      case 'integer' :
+        $min = $value - $minus;
+        $max = $value + $plus;
+        break;
     }
 
     if ($this->operator == 'range') {
       $this->query->add_where($this->options['group'], $field, array($min, $max), 'BETWEEN');
     }
     else {
-      $this->query->add_where($this->options['group'], db_or()->condition($field, $min, '<=')->condition($field, $max, '>='));
+      $this->query->add_where($this->options['group'],
+        db_or()
+          ->condition($field, $min, '<=')
+          ->condition($field, $max, '>=')
+      );
     }
   }
 }
