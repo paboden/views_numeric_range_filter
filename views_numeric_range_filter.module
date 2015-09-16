@@ -15,7 +15,7 @@ function views_numeric_range_filter_views_api() {
 }
 
 /**
- * Implements hook_views_data().
+ * Implements hook_views_data_alter().
  */
 function views_numeric_range_filter_views_data_alter(&$data) {
   foreach ($data as &$item) {
