@@ -1,5 +1,5 @@
-name = Vews Numeric Range Filter module.
-description = Vews Numeric Range Filter module.
+name = Views Numeric Range Filter module.
+description = Creates an automatic +/- tolerance setting when filtering a numeric based view field.
 core = 7.x
 package = Views
 dependencies[] = views
