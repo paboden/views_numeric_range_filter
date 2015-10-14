@@ -7,7 +7,7 @@
 
 /**
  * Implements hook_views_api().
-*/
+ */
 function views_numeric_range_filter_views_api() {
   return array(
     'api' => 3,

@@ -60,15 +60,15 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
       $form['range_min'] = array(
         '#type' => 'textfield',
         '#title' => t('- Minus'),
-        '#default_value' => $this->options['min'],
-        '#description' => t('Value minus this amount starts the search'),
+        '#default_value' => $this->options['range_min'],
+        '#description' => t('Starting value from the exposed filter minus this amount becomes the minimum search value.'),
       );
 
       $form['range_max'] = array(
         '#type' => 'textfield',
         '#title' => t('+ Plus'),
-        '#default_value' => $this->options['max'],
-        '#description' => t('Value plus this amount ends the search'),
+        '#default_value' => $this->options['range_max'],
+        '#description' => t('Starting value from the exposed filter plus this amount becomes the maximum search value.'),
       );
 
       $form['range_operator'] = array(
@@ -79,7 +79,7 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
           'percent' => t('Percent'),
           'multiple' => t('Multiple'),
         ),
-        '#default_value' => $this->options['operator'],
+        '#default_value' => $this->options['range_operator'],
         '#description' => t('The operator to use'),
       );
     }
@@ -95,7 +95,7 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
     $plus = $this->options['range_max'];
     $value = $this->value['value'];
 
-    switch($operator) {
+    switch ($operator) {
       case 'percent' :
         $min = $value - (($minus * 0.01) * $value);
         $max = (($plus * 0.01) * $value) + $value;
