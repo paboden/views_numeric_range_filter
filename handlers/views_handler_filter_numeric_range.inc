@@ -96,16 +96,18 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
     $value = $this->value['value'];
 
     switch ($operator) {
-      case 'percent' :
+      case 'percent':
         $min = $value - (($minus * 0.01) * $value);
         $max = (($plus * 0.01) * $value) + $value;
         break;
-      case 'multiple' :
+
+      case 'multiple':
         $min = $value - ($value * $minus);
         $max = ($value * $plus) + $value;
         break;
+
+      case 'integer':
       default:
-      case 'integer' :
         $min = $value - $minus;
         $max = $value + $plus;
         break;
@@ -122,4 +124,5 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
       );
     }
   }
+
 }
