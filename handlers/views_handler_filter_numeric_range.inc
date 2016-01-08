@@ -15,7 +15,7 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
   /**
    * {@inheritdoc}
    */
-  function operators() {
+  public function operators() {
     $operators = parent::operators();
 
     $operators['range'] = array(
@@ -31,7 +31,7 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
   /**
    * {@inheritdoc}
    */
-  function has_extra_options() {
+  public function has_extra_options() {
     if ($this->operator == 'range') {
       return TRUE;
     }
@@ -40,7 +40,7 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
   /**
    * {@inheritdoc}
    */
-  function option_definition() {
+  public function option_definition() {
     $options = parent::option_definition();
 
     $options['range_min'] = array('default' => '');
@@ -53,7 +53,7 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
   /**
    * {@inheritdoc}
    */
-  function extra_options_form(&$form, &$form_state) {
+  public function extra_options_form(&$form, &$form_state) {
     parent::extra_options_form($form, $form_state);
 
     if ($this->operator == 'range') {
@@ -88,7 +88,7 @@ class views_handler_filter_numeric_range extends views_handler_filter_numeric {
   /**
    * {@inheritdoc}
    */
-  function op_range($field) {
+  public function op_range($field) {
 
     $operator = $this->options['range_operator'];
     $minus = $this->options['range_min'];
